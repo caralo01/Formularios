@@ -1,0 +1,141 @@
+<h4>Formularios <small>template</small></h4>
+<hr>
+<form (ngSubmit)="guardar(form)" #form="ngForm" novalidate=""  class="was-validated">
+
+  <div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label" for="validationName">Nombre</label>
+      <div class="col-8">
+
+        <input class="form-control"
+               id="validationName"
+               type="text"
+               placeholder="Nombre"
+               name="nombre"
+               [(ngModel)] ="usuario.nombre"
+               minlength="3"
+               required
+               #nombre="ngModel">
+               <div *ngIf="nombre.errors?.required && nombre.touched"
+                     class="invalid-feedback">
+                 Este campo es requerido.
+               </div>
+               <div *ngIf="nombre.errors?.minlength && nombre.touched" 
+                    class="invalid-feedback">
+                 Por lo menos {{ nombre.errors?.minlength.requiredLength }} carácteres.
+               </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label" for="validationSurname">Apellido</label>
+      <div class="col-8">
+
+        <input class="form-control"
+               id="validationName"
+               type="text"
+               placeholder="Apellido"
+               name="apellido"
+               [(ngModel)] ="usuario.apellido"
+               minlength="3"
+               required
+               #apellido="ngModel">
+        <div *ngIf="apellido.errors?.required && apellido.touched" 
+              class="invalid-feedback">
+         Este campo es requerido.
+        </div>
+        <div *ngIf="apellido.errors?.minlength && apellido.touched" 
+              class="invalid-feedback">
+         Por lo menos {{ apellido.errors?.minlength.requiredLength }} carácteres.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label" for="validationEmail">Correo</label>
+    <div class="col-md-8">
+
+      <input class="form-control"
+             type="email"
+             id="validationEmail"
+             placeholder="Correo electrónico"
+             name="email"
+             [(ngModel)] ="usuario.email"
+             minlength="3"
+             required
+             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+           #email="ngModel">
+      <div *ngIf="email.errors?.required && email.touched" 
+            class="invalid-feedback">
+        Este campo es requerido.
+      </div>
+      <div *ngIf="email.errors?.pattern && email.touched" 
+            class="invalid-feedback">
+        Correo no válido.
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label" for="validationCountry">País</label>
+    <div class="col-md-8">
+      <select class="form-control"
+              id="validationCountry"
+              [(ngModel)]="usuario.pais"
+              name="pais"
+              required 
+      >
+        <option value=""> Seleccione un país </option>
+        <option *ngFor="let pais of paises" [value]="pais.codigo">{{ pais.nombre }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Sexo</label>
+    <div class="col-md-8">
+      <label class="custom-control custom-radio" *ngFor="let sexo of sexos; let i = index">
+        <input type="radio"
+               name="sexo"
+               class="custom-control-input"
+               [(ngModel)]="usuario.sexo"
+               [value]="sexo"
+               id="validationGender + {{ i }}"
+               required>
+         <label class="custom-control-label" for="validationGender + {{ i }}" style="color: #000">{{ sexo }}</label>
+      </label>
+      <!--<label class="custom-control custom-radio">
+        <input type="radio" 
+               name="sexo" 
+               class="custom-control-input"
+               [(ngModel)]="usuario.sexo"
+               value="Mujer"
+               id="validationGender2">
+         <label class="custom-control-label" for="validationGender2">Mujer</label>
+      </label>-->
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Acepta</label>
+    <div class="col-md-8">
+      <label class="custom-control custom-checkbox">
+        <input class="custom-control-input" type="checkbox" [(ngModel)]="usuario.acepta" name="acepta" id="validationAccept" required>
+        <label class="custom-control-label" style="color: #000" for="validationAccept">Acepta las condiciones</label>
+      </label>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">&nbsp;</label>
+    <div class="input-group col-md-8">
+      <button type="submit" class="btn btn-outline-primary" [disabled]="!form.valid">
+        Guardar
+      </button>
+    </div>
+  </div>
+
+</form>
